@@ -7,6 +7,20 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   prettier,
+  // window.desktop — только через @shared/platform (openspec/specs/desktop-bridge)
+  {
+    files: ['src/**', 'app/**'],
+    ignores: ['src/shared/platform/**'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: "MemberExpression[object.name='window'][property.name='desktop']",
+          message: 'window.desktop — только через @shared/platform (getDesktop/isDesktop/openExternal)'
+        }
+      ]
+    }
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
